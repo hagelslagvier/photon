@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "photon"
+version = "0.1.0"
+description = ""
+authors = ["Alexey Naumov <digitaal.vier@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+sqlalchemy = "^2.0.36"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.8.0"
+mypy = "^1.13.0"
+pyupgrade = "^3.19.0"
+pytest = "^8.3.3"
+pytest-cov = "^6.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

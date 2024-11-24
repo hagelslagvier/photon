@@ -1,0 +1,7 @@
+.idea/
+.venv/
+tests/coverage/
+
+.DS_Store
+.coverage
+*.pyc
