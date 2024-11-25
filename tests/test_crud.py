@@ -1,4 +1,5 @@
 from typing import Any
+from unittest.mock import MagicMock, patch
 
 import pytest
 from sqlalchemy import Engine, and_, asc, desc, or_
@@ -7,6 +8,7 @@ from sqlalchemy.sql.elements import BinaryExpression
 
 from photon.crud.errors import DoesNotExistError
 from photon.crud.generic import session_factory
+from tests.aliases import SideEffect
 from tests.crud import (
     CourseCRUD,
     Dummy,
@@ -15,7 +17,6 @@ from tests.crud import (
     StudentCRUD,
 )
 from tests.models import Course, Group, Student
-from tests.types import SideEffect
 
 
 @pytest.mark.parametrize(
@@ -251,3 +252,38 @@ def test_if_can_get_many_to_many_related_field(
         course = CourseCRUD(session=session).read(id=1)
         assert course.id == 1
         assert {student.id for student in course.students} == {1, 4, 5, 6, 7}
+
+
+def test_if_can_delete_record(engine: Engine, content: SideEffect) -> None:
+    with session_factory(bind=engine) as session:
+        course_crud = CourseCRUD(session=session)
+
+        count = course_crud.count()
+        assert count == 5
+
+        retrieved = course_crud.read(id=1)
+        assert retrieved.id == 1
+
+        deleted = course_crud.delete(id=1)
+        assert deleted.id == 1
+
+        count = course_crud.count()
+        assert count == 4
+
+
+def test_if_can_rollback_transaction_when_error_occurs(engine: Engine) -> None:
+    with patch("photon.crud.generic.Session") as session_factory_mock:
+        session_mock = MagicMock()
+        session_mock.begin.side_effect = Exception("Boooom!")
+        session_context_mock = MagicMock()
+        session_context_mock.__enter__.return_value = session_mock
+        session_factory_mock.return_value = session_context_mock
+
+        with pytest.raises(Exception) as error:
+            with session_factory(bind=engine) as session:
+                StudentCRUD(session=session).read(id=1)
+
+        assert str(error.value) == "Boooom!"
+
+        session_mock.begin.assert_called_once()
+        session_mock.rollback.assert_called_once()
