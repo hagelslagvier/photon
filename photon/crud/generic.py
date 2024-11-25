@@ -35,9 +35,11 @@ class GenericCRUD(CRUDInterface[T]):
         (model,) = bases.__args__
         return model
 
-    def count(self) -> int:
+    def count(self, where: Any | None = None) -> int:
         model = self.get_model()
         query = select(func.count()).select_from(model)
+        if where is not None:
+            query = query.filter(where)
         count = self.session.execute(query).scalar() or 0
         return count
 

@@ -3,6 +3,7 @@ from typing import Any
 import pytest
 from sqlalchemy import Engine, and_, asc, desc, or_
 from sqlalchemy.orm import Session
+from sqlalchemy.sql.elements import BinaryExpression
 
 from photon.crud.errors import DoesNotExistError
 from photon.crud.generic import session_factory
@@ -13,7 +14,7 @@ from tests.crud import (
     LockerCRUD,
     StudentCRUD,
 )
-from tests.models import Group, Student
+from tests.models import Course, Group, Student
 from tests.types import SideEffect
 
 
@@ -70,11 +71,23 @@ def test_if_can_sanitize_unsafe_input_when_updates_instance(
         assert dummy.__dict__.get(k) == v
 
 
-def test_if_can_count_records(session: Session, content: SideEffect) -> None:
-    group_crud = GroupCRUD(session=session)
+@pytest.mark.parametrize(
+    "where, expected",
+    [
+        (None, 5),
+        (Course.id == 1, 1),
+        (Course.title == "Course_1", 1),
+        (or_(Course.title == "Course_1", Course.title == "Course_2"), 2),
+        (and_(Course.title == "Course_1", Course.title == "Course_2"), 0),
+    ],
+)
+def test_if_can_count_records(
+    session: Session, content: SideEffect, where: BinaryExpression | None, expected: int
+) -> None:
+    course_crud = CourseCRUD(session=session)
 
-    count = group_crud.count()
-    assert count == 2
+    count = course_crud.count(where=where)
+    assert count == expected
 
 
 def test_if_can_create_single_record(session: Session) -> None:

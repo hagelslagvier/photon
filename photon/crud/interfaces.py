@@ -23,9 +23,12 @@ class CRUDInterface(ABC, Generic[T]):
         """
 
     @abstractmethod
-    def count(self) -> int:
+    def count(self, where: Any | None = None) -> int:
         """
         Count the total number of records.
+
+        Args:
+            where (Any, optional): Filter conditions for retrieving records.
 
         Returns:
             int: The total number of records in the collection.
