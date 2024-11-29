@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "photon"
-version = "0.1.0"
+name = "inzicht"
+version = "0.1.1"
 description = ""
 authors = ["Alexey Naumov <digitaal.vier@gmail.com>"]
 readme = "README.md"

@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from collections.abc import Generator, Sequence
 from typing import Any, Generic, TypeVar
 
-from photon.declarative import DeclarativeBase
+from inzicht.declarative import DeclarativeBase
 
 T = TypeVar("T", bound=DeclarativeBase)
 

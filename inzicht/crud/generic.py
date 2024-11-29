@@ -5,9 +5,9 @@ from typing import Any, TypeVar
 from sqlalchemy import Engine, func, select
 from sqlalchemy.orm import Session
 
-from photon.crud.errors import DoesNotExistError
-from photon.crud.interfaces import CRUDInterface
-from photon.declarative import DeclarativeBase
+from inzicht.crud.errors import DoesNotExistError
+from inzicht.crud.interfaces import CRUDInterface
+from inzicht.declarative import DeclarativeBase
 
 T = TypeVar("T", bound=DeclarativeBase)
 

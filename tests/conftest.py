@@ -4,8 +4,8 @@ import pytest
 from sqlalchemy import Engine, StaticPool, create_engine
 from sqlalchemy.orm import Session
 
-from photon.crud.generic import session_factory
-from photon.declarative import DeclarativeBase
+from inzicht.crud.generic import session_factory
+from inzicht.declarative import DeclarativeBase
 from tests.crud import CourseCRUD, GroupCRUD, LockerCRUD, StudentCRUD
 
 

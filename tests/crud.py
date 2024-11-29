@@ -1,4 +1,4 @@
-from photon.crud.generic import GenericCRUD
+from inzicht.crud.generic import GenericCRUD
 from tests.models import Course, Dummy, Group, Locker, Student
 
 

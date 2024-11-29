@@ -1,15 +1,15 @@
 fix:
-    find photon/ tests/ -name "*.py" -type f | xargs -I {} pyupgrade --py312-plus {}
-    ruff check photon/ tests/ --fix --select I
-    ruff format photon/ tests/
+    find inzicht/ tests/ -name "*.py" -type f | xargs -I {} pyupgrade --py312-plus {}
+    ruff check inzicht/ tests/ --fix --select I
+    ruff format inzicht/ tests/
 
 
 type-check:
-    mypy photon/
+    mypy inzicht/
     mypy tests/
 
 test:
-    pytest -s --cov=photon/ --cov-report=html:tests/coverage tests/
+    pytest -s --cov=inzicht/ --cov-report=html:tests/coverage tests/
 
 show-coverage:
     #!/usr/bin/env python3
@@ -25,6 +25,6 @@ check:
     just test
 
 clean:
-    find photon tests -type d -name ".*_cache" -exec rm -rf {} +
-    find photon tests -type d -name "__pycache__" -exec rm -rf {} +
-    find photon tests -type f \( -name "*.pyc" -o -name "*.pyo" \) -exec rm -f {} +
+    find inzicht tests -type d -name ".*_cache" -exec rm -rf {} +
+    find inzicht tests -type d -name "__pycache__" -exec rm -rf {} +
+    find inzicht tests -type f \( -name "*.pyc" -o -name "*.pyo" \) -exec rm -f {} +
