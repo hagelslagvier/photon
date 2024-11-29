@@ -20,3 +20,7 @@ Install the package via pip:
 ```bash
 pip install inzicht
 ```
+
+## License
+
+inzicht is distributed under the [MIT license](https://www.opensource.org/licenses/mit-license.php).
