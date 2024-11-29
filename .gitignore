@@ -1,5 +1,6 @@
 .idea/
 .venv/
+dist/
 tests/coverage/
 
 .DS_Store
