@@ -45,14 +45,16 @@ class GenericCRUD(CRUDInterface[T]):
 
     def create(self, *, payload: dict[str, Any]) -> T:
         model = self.get_model()
-        instance = model.new(**payload)
+        factory = getattr(model, "new") or model
+        instance = factory(**payload)
         self.session.add(instance)
         self.session.flush()
         return instance
 
     def create_many(self, *, payload: Sequence[dict[str, Any]]) -> Sequence[T]:
         model = self.get_model()
-        instances = [model.new(**item) for item in payload]
+        factory = getattr(model, "new") or model
+        instances = [factory(**item) for item in payload]
         self.session.add_all(instances)
         self.session.flush()
         return instances
