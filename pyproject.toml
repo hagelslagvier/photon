@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 sqlalchemy = "^2.0.36"
+sqlmodel = "^0.0.22"
 
 
 [tool.poetry.group.dev.dependencies]

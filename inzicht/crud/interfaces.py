@@ -2,9 +2,7 @@ from abc import ABC, abstractmethod
 from collections.abc import Generator, Sequence
 from typing import Any, Generic, TypeVar
 
-from inzicht.declarative import DeclarativeBase
-
-T = TypeVar("T", bound=DeclarativeBase)
+T = TypeVar("T", bound="DeclarativeBase")
 
 
 class CRUDInterface(ABC, Generic[T]):
