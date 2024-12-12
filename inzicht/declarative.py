@@ -1,6 +1,8 @@
-from typing import Any, Self
+from typing import Any, Type, TypeVar
 
 from sqlalchemy.orm import DeclarativeBase as OriginalBase
+
+T = TypeVar("T", bound="DeclarativeBase")
 
 
 class DeclarativeBase(OriginalBase):
@@ -22,7 +24,7 @@ class DeclarativeBase(OriginalBase):
         return safe_attributes
 
     @classmethod
-    def new(cls, **kwargs: Any) -> Self:
+    def new(cls: type[T], **kwargs: Any) -> T:
         safe_kwargs = {k: v for k, v in kwargs.items() if k in cls._get_attributes()}
         return cls(**safe_kwargs)
 
